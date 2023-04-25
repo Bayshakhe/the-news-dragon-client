@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Home = () => {
+const News = () => {
     return (
         <div>
-            home
+            news id with news
         </div>
     );
 };
 
-export default Home;
+export default News;
