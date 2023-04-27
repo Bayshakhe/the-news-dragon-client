@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { AuthContext } from "../../authProvider/AuthProvider";
 
 const NavigationBar = () => {
-  // const { user } = useContext(AuthContext);
-  const user = null
+  const { user,loading,logout } = useContext(AuthContext);
+
+  // if(loading){
+
+  // }
+  
+  const handleLogout = () => {
+    logout()
+  }
 
     return (
         <Container>
@@ -15,7 +22,7 @@ const NavigationBar = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mx-auto">
             <NavLink
-              to={`/`}
+              to={`/category/0`}
               className={({ isActive }) =>
                 isActive
                   ? "text-white bg-dark p-2"
@@ -52,8 +59,8 @@ const NavigationBar = () => {
               ""
             )}
             {user ? (
-                <Link to={`/logout`}>
-                  <Button variant="dark">Logout</Button>
+                <Link>
+                  <Button onClick={handleLogout} variant="dark">Logout</Button>
                 </Link>
             ) : (<>
                 <Link to={`/login`}>

@@ -45,7 +45,7 @@ const LeftNav = () => {
       <h2 className="text-start">All Category</h2>
       <ListGroup>
         {categories?.map((category) => (
-          <ListGroup.Item className="ps-5 border-0">
+          <ListGroup.Item key={category.id} className="ps-5 border-0">
             <NavLink
               to={`/category/${category.id}`}
               className={({ isActive }) =>
