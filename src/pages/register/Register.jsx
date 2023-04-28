@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../authProvider/AuthProvider";
 
 const Register = () => {
-  const {createUser} = useContext(AuthContext);
+  const {createUser, updateUserProfile} = useContext(AuthContext);
   // console.log(createUser)
 
   const handleRegister = (event) => {
@@ -21,6 +21,12 @@ const Register = () => {
       loggedUser.displayName = name;
       loggedUser.photoURL = image;
       console.log(loggedUser)
+    })
+    .catch(error => console.log(error));
+
+    updateUserProfile(name, image)
+    .then(result => {
+      console.log(result)
     })
     .catch(error => console.log(error))
   }
