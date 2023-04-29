@@ -8,6 +8,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
+import { Spinner } from "react-bootstrap";
 
 export const AuthContext = createContext(null);
 
@@ -15,19 +16,6 @@ const AuthProvider = ({ children }) => {
   const auth = getAuth(app);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  if (loading) {
-    <div className="progress">
-      <div
-        className="progress-bar mx-auto progress-bar-striped progress-bar-animated"
-        role="progressbar"
-        aria-valuenow="75"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        style={{width: "75%"}}
-      ></div>
-    </div>;
-  }
 
   const createUser = (email, password) => {
     setLoading(true);
