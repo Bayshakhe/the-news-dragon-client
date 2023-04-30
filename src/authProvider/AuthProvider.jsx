@@ -1,19 +1,24 @@
 import React, { createContext, useEffect, useState } from "react";
 import {
+  GithubAuthProvider,
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
-import { Spinner } from "react-bootstrap";
 
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const auth = getAuth(app);
+  const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -26,6 +31,14 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
+
+  const googleLogin = () => {
+    return signInWithPopup(auth, googleProvider)
+  }
+
+  const githubLogin = () => {
+    return signInWithPopup(auth, githubProvider)
+  }
 
   const updateUserProfile = (name, photo) => {
     console.log(name,photo)
@@ -55,6 +68,8 @@ const AuthProvider = ({ children }) => {
     logout,
     loading,
     updateUserProfile,
+    googleLogin,
+    githubLogin,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

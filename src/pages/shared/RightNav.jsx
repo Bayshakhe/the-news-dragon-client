@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, ListGroup } from "react-bootstrap";
 import {
   FaGoogle,
@@ -11,15 +11,35 @@ import qZone1 from "../../assets/qZone1.png";
 import qZone2 from "../../assets/qZone2.png";
 import qZone3 from "../../assets/qZone3.png";
 import bg from "../../assets/bg.png";
+import { AuthContext } from "../../authProvider/AuthProvider";
 
 const RightNav = () => {
+  const {googleLogin,githubLogin} = useContext(AuthContext);
+
+  const handleGoogleLogin = () => {
+    googleLogin()
+    .then(result => {
+      const loggedUser = result.user
+      console.log(loggedUser)
+    })
+    .catch(error => console.log(error.message))
+  }
+  const handleGithubLogin = () => {
+    githubLogin()
+    .then(result => {
+      const loggedUser = result.user;
+      console.log(loggedUser);
+    })
+    .catch(error => console.log(error.message))
+  }
+
   return (
     <>
       <div className="my-3">
-        <Button className="w-100 mb-2" variant="outline-primary">
+        <Button onClick={handleGoogleLogin} className="w-100 mb-2" variant="outline-primary">
           <FaGoogle /> Login with Google
         </Button>
-        <Button className="w-100" variant="outline-secondary">
+        <Button onClick={handleGithubLogin} className="w-100" variant="outline-secondary">
           <FaGithub /> Login with Github
         </Button>
         <div>

@@ -5,40 +5,39 @@ import { AuthContext } from "../../authProvider/AuthProvider";
 import { useState } from "react";
 
 const Register = () => {
-  const {createUser, updateUserProfile} = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
   const [accepted, setAccepted] = useState(false);
 
   const handleRegister = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     const form = event.target;
     const name = form.name.value;
     const image = form.image.value;
     const email = form.email.value;
     const password = form.password.value;
-    
+
     createUser(email, password)
-    .then(result => {
-      const loggedUser = result.user;
-      loggedUser.displayName = name;
-      loggedUser.photoURL = image;
-      console.log(loggedUser)
-    })
-    .catch(error => console.log(error));
+      .then((result) => {
+        const loggedUser = result.user;
+        loggedUser.displayName = name;
+        loggedUser.photoURL = image;
+        console.log(loggedUser);
+        updateUserProfile(name, image)
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+  };
 
-    updateUserProfile(name, image)
-    .then(result => {
-      console.log(result)
-    })
-    .catch(error => console.log(error))
-  }
-
-  const handleAccepted = event => {
+  const handleAccepted = (event) => {
     setAccepted(event.target.checked);
-  }
+  };
 
   return (
     <Container>
-        <h2 className="text-center mt-5 mb-4">Register</h2>
+      <h2 className="text-center mt-5 mb-4">Register</h2>
       <Form onSubmit={handleRegister} className="w-25 mx-auto">
         <Form.Group className="mb-3" controlId="formName">
           <Form.Label>Your Name</Form.Label>
@@ -64,11 +63,28 @@ const Register = () => {
           />
         </Form.Group>
 
-        <Form.Group onClick={handleAccepted} className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" name='accept' label={<>Accept <Link to='/terms'>Terms and Conditions</Link></>} />
+        <Form.Group
+          onClick={handleAccepted}
+          className="mb-3"
+          controlId="formBasicCheckbox"
+        >
+          <Form.Check
+            type="checkbox"
+            name="accept"
+            label={
+              <>
+                Accept <Link to="/terms">Terms and Conditions</Link>
+              </>
+            }
+          />
         </Form.Group>
 
-        <Button disabled={!accepted} className="mb-3" variant="primary" type="submit">
+        <Button
+          disabled={!accepted}
+          className="mb-3"
+          variant="primary"
+          type="submit"
+        >
           Submit
         </Button>
         <br />
@@ -79,9 +95,7 @@ const Register = () => {
 
         <br />
 
-        <Form.Text className="text-danger">
-         
-        </Form.Text>
+        <Form.Text className="text-danger"></Form.Text>
       </Form>
     </Container>
   );

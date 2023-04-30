@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
+import { Button, Container, Image, Nav, Navbar } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { AuthContext } from "../../authProvider/AuthProvider";
 
 const NavigationBar = () => {
   const { user,loading,logout } = useContext(AuthContext);
+  console.log(user)
 
   // if(loading){
 
@@ -53,16 +54,13 @@ const NavigationBar = () => {
             </NavLink>
           </Nav>
           <Nav className="d-flex align-items-center">
-            {user ? (
-                <FaUserCircle style={{ fontSize: "30px" }}></FaUserCircle>
-            ) : (
-              ""
-            )}
-            {user ? (
+            {user ? <>
+               {/* <FaUserCircle style={{ fontSize: "30px" }}></FaUserCircle> */}
+                <Image className='me-2' style={{width: '40px'}}  src={user.photoURL} roundedCircle  />
                 <Link>
                   <Button onClick={handleLogout} variant="dark">Logout</Button>
                 </Link>
-            ) : (<>
+                </> : <>
                 <Link to={`/login`}>
                   <Button variant="dark" className="me-2">Login</Button>
                 </Link>
@@ -70,7 +68,7 @@ const NavigationBar = () => {
                   <Button variant="dark">Register</Button>
                 </Link>
                 </>
-            )}
+                }
           </Nav>
         </Navbar.Collapse>
       </Navbar>
